@@ -3,84 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ ጽ/ቤት</title>
+    <title>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ</title>
     <style>
-        /* Pebble Premium Typography & Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            background-color: #050507;
+            background-color: #0b0b0e;
             color: #ffffff;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            padding: 0; /* padding አጥፍተነዋል */
         }
 
-        /* Pebble Style Glassmorphism Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(5, 5, 7, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-logo {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #ffffff;
-            text-transform: uppercase;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #ffffff;
-        }
-
-        /* Full Screen Hero Section (Pebble Showcase Style) */
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
+        /* ራስ-ሰር ስላይደር - አሁን ከላይ ነው */
         .hero-slideshow-container {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            z-index: 1;
+            height: 80vh; /* ቁመቱ ትንሽ ረዘም ተደርጓል */
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            background-color: #16161a;
         }
 
         .hero-slide {
@@ -90,95 +35,67 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.2s ease-in-out;
             object-fit: cover;
-            filter: brightness(0.45);
         }
 
         .hero-slide.active {
             opacity: 1;
+            z-index: 1;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
+        /* ርዕሱ (አሁን ዝቅ ብሏል) */
+        header {
             text-align: center;
+            padding: 50px 15px; /* ከላይ እና ታች ክፍተት */
             max-width: 900px;
-            padding: 0 20px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
+        header h1 {
+            font-size: 2.5rem;
             font-weight: 600;
-            letter-spacing: -1px;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            background: linear-gradient(180deg, #ffffff 0%, #a2a2a6 100%);
+            line-height: 1.3;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ff9900, #ff5500, #00b4db);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-content p {
+        header p {
             color: #8e8e93;
-            font-size: 1.3rem;
-            font-weight: 400;
-            margin-bottom: 35px;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
         }
 
-        .cta-btn {
-            background-color: #ffffff;
-            color: #000000;
-            padding: 14px 32px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.3s, background-color 0.3s;
-            display: inline-block;
+        /* የሞዛይክ መደርደሪያ */
+        .gallery-wrapper {
+            padding: 0 15px 40px 15px; /* ጋለሪው ብቻ padding አለው */
         }
 
-        .cta-btn:hover {
-            transform: scale(1.05);
-            background-color: #e8e8ed;
-        }
-
-        /* Content Wrapper & Gallery Title */
-        .main-content {
-            padding: 100px 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 50px;
-            text-align: left;
-            letter-spacing: -0.5px;
-        }
-
-        /* Pebble Card Grid Layout */
         .gallery-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            grid-auto-rows: 280px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-auto-rows: 240px;
             grid-auto-flow: dense;
-            gap: 24px;
+            gap: 15px;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 20px;
-            background-color: #121214;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            background-color: #16161a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+            transition: transform 0.3s ease;
         }
 
         .gallery-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.15);
+            transform: scale(1.02);
             z-index: 2;
         }
 
@@ -191,28 +108,14 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s ease;
         }
 
         .gallery-item:hover .gallery-img {
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
 
-        /* 5 እየዘለለ የሚሰራ የሞገድ አኒሜሽን */
-        .gallery-item {
-            animation: pebbleWave 3s infinite ease-in-out;
-        }
-
-        @keyframes pebbleWave {
-            0%, 100% {
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
-            }
-        }
-
-        /* Premium Lightbox UI */
+        /* በትልቁ ማሳያ (Lightbox) */
         .lightbox {
             display: none;
             position: fixed;
@@ -221,115 +124,98 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(5, 5, 7, 0.96);
+            background-color: rgba(10, 10, 12, 0.98);
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(8px);
         }
 
         .lightbox-content {
-            max-width: 80%;
+            max-width: 85%;
             max-height: 80%;
             object-fit: contain;
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
         .close-btn {
             position: absolute;
-            top: 30px;
-            right: 40px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 35px;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
             cursor: pointer;
-            transition: color 0.3s;
+            user-select: none;
             z-index: 2100;
         }
-        .close-btn:hover { color: #ffffff; }
 
-        /* Left and Right Nav Arrows */
-        .nav-arrow {
+        /* የቀስት ቁልፎች */
+        .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 50px;
+            font-weight: bold;
             cursor: pointer;
-            padding: 20px;
+            padding: 15px;
             user-select: none;
+            transition: color 0.2s, transform 0.2s;
             z-index: 2100;
-            transition: color 0.3s, transform 0.3s;
         }
 
-        .nav-arrow:hover {
-            color: #ffffff;
+        .nav-btn:hover {
+            color: #ff9900;
             transform: translateY(-50%) scale(1.1);
         }
 
-        .prev-arrow { left: 40px; }
-        .next-arrow { right: 40px; }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
 
         .photo-counter {
             position: absolute;
-            bottom: 35px;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            bottom: 20px;
+            color: #8e8e93;
+            font-size: 1rem;
+            background-color: rgba(22, 22, 26, 0.8);
+            padding: 6px 16px;
+            border-radius: 20px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .navbar { padding: 15px 20px; }
-            .nav-links { display: none; }
-            .hero-content h1 { font-size: 2.2rem; }
-            .hero-content p { font-size: 1.1rem; }
-            .main-content { padding: 60px 20px; }
+        @media (max-width: 600px) {
+            .hero-slideshow-container { height: 40vh; }
+            header h1 { font-size: 1.7rem; }
             .gallery-container {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 grid-auto-rows: 140px;
-                gap: 14px;
+                gap: 10px;
             }
-            .nav-arrow { font-size: 30px; padding: 10px; }
-            .prev-arrow { left: 10px; }
-            .next-arrow { right: 10px; }
+            .nav-btn { font-size: 35px; padding: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Pebble Navbar -->
-    <nav class="navbar">
-        <div class="nav-logo">Kolfie Youth Wing</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#about">About</a></li>
-        </ul>
-    </nav>
+    <!-- ራስ-ሰር ስላይደር (አሁን መጀመሪያ ነው) -->
+    <div class="hero-slideshow-container" id="hero-slideshow"></div>
 
-    <!-- Full Screen Hero Section -->
-    <section class="hero-section" id="home">
-        <div class="hero-slideshow-container" id="hero-slideshow"></div>
-        <div class="hero-content">
-            <h1>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ ጽ/ቤት</h1>
-            <p>በዲጂታል የታገዘ የተመረጡ 270 የምስል መዝገቦች ዲጂታል ስብስብ</p>
-            <a href="#gallery" class="cta-btn">ምስሎችን ተመልከት</a>
-        </div>
-    </section>
+    <!-- ርዕሱ (ዝቅ ተደርጓል) -->
+    <header>
+        <h1>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ</h1>
+        <p>የተመረጡ 270 የምስል መዝገቦች ስብስብ</p>
+    </header>
 
-    <!-- Gallery Section -->
-    <main class="main-content" id="gallery">
-        <h2 class="section-title">የምስል መዝገቦች ስብስብ</h2>
-        <div class="gallery-container"></div>
-    </main>
+    <!-- ጋለሪ -->
+    <div class="gallery-wrapper">
+        <main class="gallery-container"></main>
+    </div>
 
-    <!-- Premium Lightbox Box -->
+    <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
-        <span class="nav-arrow prev-arrow">&#10094;</span>
+        <span class="nav-btn prev-btn">&#10094;</span>
         <img class="lightbox-content" id="lightbox-img">
-        <span class="nav-arrow next-arrow">&#10095;</span>
+        <span class="nav-btn next-btn">&#10095;</span>
         <div class="photo-counter" id="photo-counter"></div>
     </div>
 
@@ -338,7 +224,7 @@
         const galleryContainer = document.querySelector('.gallery-container');
         const heroSlideshow = document.getElementById('hero-slideshow');
 
-        // 1. የላይኛው ፕሪሚየም ስላይደር
+        // 1. የላይኛውን ስላይደር ፎቶዎች ማዘጋጀት
         const slideshowCount = 10;
         for (let i = 1; i <= slideshowCount; i++) {
             const img = document.createElement('img');
@@ -358,67 +244,65 @@
                 slides[currentSlideIdx].classList.add('active');
             }
         }
-        setInterval(nextSlide, 3500);
+        setInterval(nextSlide, 3000); // 3 ሰከንድ
 
-        // 2. የ 270 ካርዶች መደርደሪያ
+        // 2. የታችኛውን 270 ፎቶዎች መደርደሪያ ማዘጋጀት
         for (let i = 1; i <= totalPhotos; i++) {
             const item = document.createElement('div');
             item.className = 'gallery-item';
             
-            if (i % 9 === 0) item.classList.add('big');
+            if (i % 7 === 0) item.classList.add('big');
             else if (i % 4 === 0) item.classList.add('wide');
             else if (i % 5 === 0) item.classList.add('tall');
-
-            // 5 እየዘለለ የሚሰራ የሞገድ አኒሜሽን ስሌት
-            const waveGroup = i % 5;
-            item.style.animationDelay = `${waveGroup * 0.4}s`;
 
             item.innerHTML = `<img src="${i}.jpg" alt="ምስል ${i}" data-index="${i}" class="gallery-img" loading="lazy">`;
             galleryContainer.appendChild(item);
         }
 
-        // Lightbox አሰሳ ስራዎች
+        // Lightbox ስራዎች
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.querySelector('.close-btn');
-        const prevArrow = document.querySelector('.prev-arrow');
-        const nextArrow = document.querySelector('.next-arrow');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
         const photoCounter = document.getElementById('photo-counter');
         
         let currentPhotoIdx = 1;
 
-        function updateLightbox(idx) {
+        function showPhoto(idx) {
             currentPhotoIdx = parseInt(idx);
             
+            // ወሰን መቆጣጠሪያ
             if (currentPhotoIdx > totalPhotos) currentPhotoIdx = 1;
             if (currentPhotoIdx < 1) currentPhotoIdx = totalPhotos;
             
             lightboxImg.src = `${currentPhotoIdx}.jpg`;
-            photoCounter.textContent = `IMAGE ${currentPhotoIdx} OF ${totalPhotos}`;
+            photoCounter.textContent = `ምስል ${currentPhotoIdx} / ${totalPhotos}`;
         }
 
         galleryContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('gallery-img')) {
                 lightbox.style.display = 'flex';
-                updateLightbox(e.target.getAttribute('data-index'));
+                showPhoto(e.target.getAttribute('data-index'));
             }
         });
 
-        nextArrow.addEventListener('click', () => updateLightbox(currentPhotoIdx + 1));
-        prevArrow.addEventListener('click', () => updateLightbox(currentPhotoIdx - 1));
+        // የቀስት ቁልፎች
+        nextBtn.addEventListener('click', () => showPhoto(currentPhotoIdx + 1));
+        prevBtn.addEventListener('click', () => showPhoto(currentPhotoIdx - 1));
 
-        // Keyboard Controls
+        // የኪቦርድ ቁልፎች
         document.addEventListener('keydown', (e) => {
             if (lightbox.style.display === 'flex') {
-                if (e.key === 'ArrowRight') updateLightbox(currentPhotoIdx + 1);
-                if (e.key === 'ArrowLeft') updateLightbox(currentPhotoIdx - 1);
+                if (e.key === 'ArrowRight') showPhoto(currentPhotoIdx + 1);
+                if (e.key === 'ArrowLeft') showPhoto(currentPhotoIdx - 1);
                 if (e.key === 'Escape') lightbox.style.display = 'none';
             }
         });
 
         closeBtn.addEventListener('click', () => lightbox.style.display = 'none');
         lightbox.addEventListener('click', (e) => {
-            if (e.target !== lightboxImg && e.target !== closeBtn && !e.target.classList.contains('nav-arrow')) {
+            if (e.target !== lightboxImg && e.target !== closeBtn && !e.target.classList.contains('nav-btn')) {
                 lightbox.style.display = 'none';
             }
         });
