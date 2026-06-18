@@ -3,29 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ</title>
+    <title>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ ጽ/ቤት</title>
     <style>
+        /* Typography & Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #0b0b0e;
+            background-color: #050507;
             color: #ffffff;
-            padding: 0; /* padding አጥፍተነዋል */
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* ራስ-ሰር ስላይደር - አሁን ከላይ ነው */
-        .hero-slideshow-container {
-            width: 100%;
-            height: 80vh; /* ቁመቱ ትንሽ ረዘም ተደርጓል */
-            overflow: hidden;
+        /* Hero Container (Slideshow) */
+        .hero-section {
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            background-color: #16161a;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         .hero-slide {
@@ -35,67 +47,176 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 1.2s ease-in-out;
+            transition: opacity 1.5s ease-in-out;
             object-fit: cover;
+            filter: brightness(0.4);
         }
 
         .hero-slide.active {
             opacity: 1;
-            z-index: 1;
         }
 
-        /* ርዕሱ (አሁን ዝቅ ብሏል) */
-        header {
+        .title-wrapper {
+            position: absolute;
+            bottom: 15vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 3;
+        }
+
+        .hero-content {
+            position: relative;
             text-align: center;
-            padding: 50px 15px; /* ከላይ እና ታች ክፍተት */
             max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            line-height: 1.3;
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.2;
             margin-bottom: 15px;
-            background: linear-gradient(to right, #ff9900, #ff5500, #00b4db);
+            background: linear-gradient(180deg, #ffffff 0%, #a2a2a6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        header p {
+        .hero-content p {
             color: #8e8e93;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             margin-bottom: 30px;
         }
 
-        /* የሞዛይክ መደርደሪያ */
-        .gallery-wrapper {
-            padding: 0 15px 40px 15px; /* ጋለሪው ብቻ padding አለው */
+        .cta-btn {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: #ffffff;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+
+        /* New Section: Impact Dashboard */
+        .dashboard-section {
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #ffffff, #8e8e93);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 20px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(40, 167, 69, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #a2a2a6;
+            font-size: 1rem;
+        }
+
+        /* Filter Tabs */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #a2a2a6;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* Gallery Grid */
+        .main-content {
+            padding: 40px 40px 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .gallery-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            grid-auto-rows: 240px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-auto-rows: 280px;
             grid-auto-flow: dense;
-            gap: 15px;
-            max-width: 1300px;
-            margin: 0 auto;
+            gap: 24px;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
-            background-color: #16161a;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            background-color: #121214;
+            border: 1px solid rgba(255, 255, 255, 0.03);
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, opacity 0.4s;
+        }
+
+        .gallery-item.hide {
+            display: none;
         }
 
         .gallery-item:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
             z-index: 2;
         }
 
@@ -108,14 +229,96 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .gallery-item:hover .gallery-img {
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
 
-        /* በትልቁ ማሳያ (Lightbox) */
+        /* New Section: Audio & Key Projects Layout */
+        .interactive-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .interactive-section { grid-template-columns: 1fr; }
+        }
+
+        .audio-player-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .audio-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .audio-sub {
+            color: #8e8e93;
+            margin-bottom: 25px;
+        }
+
+        audio {
+            width: 100%;
+            outline: none;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            border-left: 2px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #28a745;
+            border: 4px solid #050507;
+        }
+
+        .timeline-date {
+            color: #28a745;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .timeline-desc {
+            color: #a2a2a6;
+            font-size: 0.95rem;
+        }
+
+        /* Lightbox UI */
         .lightbox {
             display: none;
             position: fixed;
@@ -124,97 +327,142 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(10, 10, 12, 0.98);
+            background-color: rgba(5, 5, 7, 0.98);
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(15px);
         }
 
         .lightbox-content {
-            max-width: 85%;
+            max-width: 80%;
             max-height: 80%;
             object-fit: contain;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
 
         .close-btn {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 40px;
+            top: 30px;
+            right: 40px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 35px;
             cursor: pointer;
-            user-select: none;
             z-index: 2100;
         }
 
-        /* የቀስት ቁልፎች */
         .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 50px;
-            font-weight: bold;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 40px;
             cursor: pointer;
-            padding: 15px;
+            padding: 20px;
             user-select: none;
-            transition: color 0.2s, transform 0.2s;
             z-index: 2100;
         }
 
-        .nav-btn:hover {
-            color: #ff9900;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
-
+        .prev-btn { left: 40px; }
+        .next-btn { right: 40px; }
         .photo-counter {
             position: absolute;
-            bottom: 20px;
-            color: #8e8e93;
-            font-size: 1rem;
-            background-color: rgba(22, 22, 26, 0.8);
-            padding: 6px 16px;
-            border-radius: 20px;
+            bottom: 35px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
         }
 
-        @media (max-width: 600px) {
-            .hero-slideshow-container { height: 40vh; }
-            header h1 { font-size: 1.7rem; }
+        @media (max-width: 768px) {
+            .title-wrapper { bottom: 10vh; }
+            .hero-content h1 { font-size: 2.3rem; }
             .gallery-container {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 grid-auto-rows: 140px;
-                gap: 10px;
+                gap: 14px;
             }
-            .nav-btn { font-size: 35px; padding: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ራስ-ሰር ስላይደር (አሁን መጀመሪያ ነው) -->
-    <div class="hero-slideshow-container" id="hero-slideshow"></div>
+    <section class="hero-section">
+        <div class="hero-slideshow-container" id="hero-slideshow"></div>
+        <div class="title-wrapper">
+            <div class="hero-content">
+                <h1>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ ጽ/ቤት</h1>
+                <p>ዲጂታል ስብስብ እና የተመረጡ ምስሎች መዝገብ</p>
+                <a href="#dashboard" class="cta-btn">ስራዎቻችንን ይጎብኙ</a>
+            </div>
+        </div>
+    </section>
 
-    <!-- ርዕሱ (ዝቅ ተደርጓል) -->
-    <header>
-        <h1>የኮልፌ ቀራኒዮ ክፍለ ከተማ ብልፅግና ፓርቲ ቅ/ጽ/ቤት ወጣት ክንፍ</h1>
-        <p>የተመረጡ 270 የምስል መዝገቦች ስብስብ</p>
-    </header>
+    <section class="dashboard-section" id="dashboard">
+        <h2 class="section-header">የአፈጻጸም ማጠቃለያ ዳሽቦርድ</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" data-target="5120">0</div>
+                <div class="stat-label">በዲጂታል የሰለጠኑ ወጣቶች</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="25480">0</div>
+                <div class="stat-label">የማህበረሰብ አገልግሎት ሰዓታት</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="890">0</div>
+                <div class="stat-label">አዳዲስ የአባልነት ምዝገባዎች</div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ጋለሪ -->
-    <div class="gallery-wrapper">
-        <main class="gallery-container"></main>
-    </div>
+    <section class="interactive-section">
+        <div class="audio-player-card">
+            <h3 class="audio-title">የወጣቶች ድምፅ</h3>
+            <p class="audio-sub">የተመረጡ አጫጭር የወጣቶች አስተያየት እና መልእክቶች</p>
+            <audio controls>
+                <source src="audio/youth-speech.mp3" type="audio/mpeg">
+                የእርስዎ መbrowser ይህንን ኦዲዮ አይደግፍም።
+            </audio>
+        </div>
 
-    <!-- Lightbox -->
+        <div>
+            <h3 class="audio-title" style="margin-bottom: 25px;">ቁልፍ ፕሮጀክቶች</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">ምዕራፍ 1</div>
+                    <div class="timeline-title">ዲጂታል ብቃትን ማሳደግ</div>
+                    <div class="timeline-desc">ለክፍለ ከተማው ወጣቶች መሰረታዊ እና ከፍተኛ የኮምፒውተር ስልጠናዎችን ማዳረስ።</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">ምዕራፍ 2</div>
+                    <div class="timeline-title">የአረንጓዴ አሻራ ተሳትፎ</div>
+                    <div class="timeline-desc">የክረምት በጎ ፈቃድ አገልግሎትን መሰረት በማድረግ የተከናወኑ የችግኝ ተከላ ስራዎች።</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">ምዕራፍ 3</div>
+                    <div class="timeline-title">የኢንተርፕራይነርሺፕ ስልጠና</div>
+                    <div class="timeline-desc">ወጣቶች የራሳቸውን የስራ ዕድል መፍጠር እንዲችሉ የቢዝነስ ክህሎት ማስተማር።</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content" id="gallery">
+        <h2 class="section-header" style="text-align: center; margin-bottom: 20px;">የምስል መዝገቦች ስብስብ</h2>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">ሁሉንም አሳይ</button>
+            <button class="filter-btn" data-filter="training">ስልጠናዎች</button>
+            <button class="filter-btn" data-filter="service">በጎ ፈቃድ</button>
+            <button class="filter-btn" data-filter="meetings">ስብሰባዎች</button>
+        </div>
+
+        <div class="gallery-container"></div>
+    </main>
+
     <div id="lightbox" class="lightbox">
         <span class="close-btn">&times;</span>
         <span class="nav-btn prev-btn">&#10094;</span>
-        <img class="lightbox-content" id="lightbox-img">
+        <img class="lightbox-content" id="lightbox-img" alt="View">
         <span class="nav-btn next-btn">&#10095;</span>
         <div class="photo-counter" id="photo-counter"></div>
     </div>
@@ -224,19 +472,20 @@
         const galleryContainer = document.querySelector('.gallery-container');
         const heroSlideshow = document.getElementById('hero-slideshow');
 
-        // 1. የላይኛውን ስላይደር ፎቶዎች ማዘጋጀት
-        const slideshowCount = 10;
+        // 1. Hero Slideshow setup
+        const slideshowCount = 10; 
+        const slideshowFragment = document.createDocumentFragment();
         for (let i = 1; i <= slideshowCount; i++) {
             const img = document.createElement('img');
             img.src = `${i}.jpg`;
             img.className = 'hero-slide';
             if (i === 1) img.classList.add('active');
-            heroSlideshow.appendChild(img);
+            slideshowFragment.appendChild(img);
         }
+        heroSlideshow.appendChild(slideshowFragment);
 
         let currentSlideIdx = 0;
         const slides = document.getElementsByClassName('hero-slide');
-        
         function nextSlide() {
             if (slides.length > 0) {
                 slides[currentSlideIdx].classList.remove('active');
@@ -244,68 +493,109 @@
                 slides[currentSlideIdx].classList.add('active');
             }
         }
-        setInterval(nextSlide, 3000); // 3 ሰከንድ
+        setInterval(nextSlide, 3500);
 
-        // 2. የታችኛውን 270 ፎቶዎች መደርደሪያ ማዘጋጀት
+        // 2. Gallery Setup with Categories
+        const categories = ['training', 'service', 'meetings'];
+        const galleryFragment = document.createDocumentFragment();
+        
         for (let i = 1; i <= totalPhotos; i++) {
             const item = document.createElement('div');
             item.className = 'gallery-item';
             
-            if (i % 7 === 0) item.classList.add('big');
+            // ለፎቶዎቹ በዘፈቀደ ምድብ መስጠት (ለሙከራ ያህል)
+            const randomCategory = categories[i % categories.length];
+            item.setAttribute('data-category', randomCategory);
+            
+            if (i % 9 === 0) item.classList.add('big');
             else if (i % 4 === 0) item.classList.add('wide');
             else if (i % 5 === 0) item.classList.add('tall');
 
-            item.innerHTML = `<img src="${i}.jpg" alt="ምስል ${i}" data-index="${i}" class="gallery-img" loading="lazy">`;
-            galleryContainer.appendChild(item);
+            item.innerHTML = `<img src="${i}.jpg" alt="ምስል ${i}" data-index="${i}" class="gallery-img" loading="lazy" onerror="this.parentElement.style.display='none';">`;
+            galleryFragment.appendChild(item);
         }
+        galleryContainer.appendChild(galleryFragment);
 
-        // Lightbox ስራዎች
+        // NEW: Filter Functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.classList.remove('hide');
+                    } else {
+                        item.classList.add('hide');
+                    }
+                });
+            });
+        });
+
+        // NEW: Counter Animation Feature
+        const stats = document.querySelectorAll('.stat-number');
+        const speed = 200;
+
+        const startCounting = () => {
+            stats.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 15);
+                    } else {
+                        counter.innerText = target.toLocaleString();
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Scroll ሲደረግ ብቻ አኒሜሽኑ እንዲጀምር ማድረግ
+        let counted = false;
+        window.addEventListener('scroll', () => {
+            const dashboard = document.getElementById('dashboard');
+            if(window.scrollY + window.innerHeight >= dashboard.offsetTop && !counted) {
+                startCounting();
+                counted = true;
+            }
+        });
+
+        // Lightbox Code
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.querySelector('.close-btn');
         const prevBtn = document.querySelector('.prev-btn');
         const nextBtn = document.querySelector('.next-btn');
         const photoCounter = document.getElementById('photo-counter');
-        
         let currentPhotoIdx = 1;
 
-        function showPhoto(idx) {
+        function updateLightbox(idx) {
             currentPhotoIdx = parseInt(idx);
-            
-            // ወሰን መቆጣጠሪያ
             if (currentPhotoIdx > totalPhotos) currentPhotoIdx = 1;
             if (currentPhotoIdx < 1) currentPhotoIdx = totalPhotos;
-            
             lightboxImg.src = `${currentPhotoIdx}.jpg`;
-            photoCounter.textContent = `ምስል ${currentPhotoIdx} / ${totalPhotos}`;
+            photoCounter.textContent = `IMAGE ${currentPhotoIdx} OF ${totalPhotos}`;
         }
 
         galleryContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('gallery-img')) {
                 lightbox.style.display = 'flex';
-                showPhoto(e.target.getAttribute('data-index'));
+                updateLightbox(e.target.getAttribute('data-index'));
             }
         });
 
-        // የቀስት ቁልፎች
-        nextBtn.addEventListener('click', () => showPhoto(currentPhotoIdx + 1));
-        prevBtn.addEventListener('click', () => showPhoto(currentPhotoIdx - 1));
-
-        // የኪቦርድ ቁልፎች
-        document.addEventListener('keydown', (e) => {
-            if (lightbox.style.display === 'flex') {
-                if (e.key === 'ArrowRight') showPhoto(currentPhotoIdx + 1);
-                if (e.key === 'ArrowLeft') showPhoto(currentPhotoIdx - 1);
-                if (e.key === 'Escape') lightbox.style.display = 'none';
-            }
-        });
-
+        nextBtn.addEventListener('click', () => updateLightbox(currentPhotoIdx + 1));
+        prevBtn.addEventListener('click', () => updateLightbox(currentPhotoIdx - 1));
         closeBtn.addEventListener('click', () => lightbox.style.display = 'none');
-        lightbox.addEventListener('click', (e) => {
-            if (e.target !== lightboxImg && e.target !== closeBtn && !e.target.classList.contains('nav-btn')) {
-                lightbox.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
