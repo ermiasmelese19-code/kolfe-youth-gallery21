@@ -49,7 +49,7 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
             object-fit: cover;
-            filter: brightness(0.5); /* ለተነባቢነት ጥራት ሲባል በትንሹ ጨለም የተደረገ */
+            filter: brightness(0.5);
         }
 
         .hero-slide.active {
@@ -135,6 +135,7 @@
             gap: 24px;
         }
 
+        /* --- አዲስ፡ የሁሉም ፎቶዎች መግቢያ አኒሜሽን ስታይል --- */
         .gallery-item {
             position: relative;
             overflow: hidden;
@@ -142,7 +143,17 @@
             background-color: #121214;
             border: 1px solid rgba(255, 255, 255, 0.03);
             cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+            
+            /* ለመጀመሪያ መደበቂያ */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, opacity 0.8s ease;
+        }
+
+        /* ስክሮል ሲደረግ ፎቶው ሲታይ የሚበራው ክላስ */
+        .gallery-item.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .gallery-item:hover {
@@ -165,20 +176,6 @@
 
         .gallery-item:hover .gallery-img {
             transform: scale(1.04);
-        }
-
-        /* --- 5 እየዘለለ የሚሰራ የሞገድ አኒሜሽን (CSS) --- */
-        .animate-pattern {
-            animation: ripplePulse 3s infinite ease-in-out;
-        }
-
-        @keyframes ripplePulse {
-            0%, 100% {
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
-            }
         }
 
         /* Premium Lightbox UI */
@@ -295,7 +292,7 @@
         const galleryContainer = document.querySelector('.gallery-container');
         const heroSlideshow = document.getElementById('hero-slideshow');
 
-        // 1. የላይኛው ፕሪሚየም ስላይደር ፎቶዎች (Optimized Object Creation)
+        // 1. የላይኛው ፕሪሚየም ስላይደር ፎቶዎች
         const slideshowCount = 10; 
         const slideshowFragment = document.createDocumentFragment();
         for (let i = 1; i <= slideshowCount; i++) {
@@ -318,9 +315,9 @@
                 slides[currentSlideIdx].classList.add('active');
             }
         }
-        setInterval(nextSlide, 3500); // 3.5 ሰከንድ
+        setInterval(nextSlide, 3500);
 
-        // 2. የታችኛው 270 የፎቶ ካርዶች መደርደሪያ (Optimized: Single DOM Insertion)
+        // 2. የታችኛው 270 የፎቶ ካርዶች መደርደሪያ 
         const galleryFragment = document.createDocumentFragment();
         for (let i = 1; i <= totalPhotos; i++) {
             const item = document.createElement('div');
@@ -331,15 +328,37 @@
             else if (i % 4 === 0) item.classList.add('wide');
             else if (i % 5 === 0) item.classList.add('tall');
 
-            // --- 5 እየዘለለ የሚሰራ የሞገድ አኒሜሽን ---
-            const waveGroup = i % 5;
-            item.classList.add('animate-pattern');
-            item.style.animationDelay = `${waveGroup * 0.4}s`;
-
             item.innerHTML = `<img src="${i}.jpg" alt="የምስል መዝገብ ቁጥር ${i}" data-index="${i}" class="gallery-img" loading="lazy" onerror="this.style.display='none';">`;
             galleryFragment.appendChild(item);
         }
         galleryContainer.appendChild(galleryFragment);
+
+        // --- አዲስ፡ ሁሉም ፎቶዎች በየተራ አኒሜት እያደረጉ እንዲገቡ ማድረጊያ ጃቫስክሪፕት ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            let delayCounter = 0;
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const item = entry.target;
+                    // በአንድ ጊዜ ለሚታዩ ፎቶዎች ቅደም ተከተል (stagger effect) መስጠት
+                    setTimeout(() => {
+                        item.classList.add('reveal');
+                    }, delayCounter * 100); 
+                    delayCounter++;
+                    observer.unobserve(item); // አንዴ አኒሜት ካደረገ በኋላ ደግሞ እንዳይደግም
+                }
+            });
+        }, observerOptions);
+
+        // ሁሉንም የጋለሪ ካርዶች ለአሰሳው መመዝገብ
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            observer.observe(item);
+        });
 
         // Lightbox አሰሳ ስራዎች
         const lightbox = document.getElementById('lightbox');
@@ -354,7 +373,6 @@
         function updateLightbox(idx) {
             currentPhotoIdx = parseInt(idx);
             
-            // ወሰን መቆጣጠሪያ (Boundaries)
             if (currentPhotoIdx > totalPhotos) currentPhotoIdx = 1;
             if (currentPhotoIdx < 1) currentPhotoIdx = totalPhotos;
             
@@ -369,11 +387,9 @@
             }
         });
 
-        // --- ግራ እና ቀኝ ቀስቶች ---
         nextBtn.addEventListener('click', () => updateLightbox(currentPhotoIdx + 1));
         prevBtn.addEventListener('click', () => updateLightbox(currentPhotoIdx - 1));
 
-        // የኪቦርድ ቁልፎች ስራ (Accessibility)
         document.addEventListener('keydown', (e) => {
             if (lightbox.style.display === 'flex') {
                 if (e.key === 'ArrowRight') updateLightbox(currentPhotoIdx + 1);
@@ -390,4 +406,4 @@
         });
     </script>
 </body>
-</html>
+            </html>
